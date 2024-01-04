@@ -1,0 +1,54 @@
+# --TASK--
+#Import data
+male_teams_fc_24 <- read_excel("Desktop/male teams fc 24.xls")
+# Use the head(dataset, 10) function to display the top 10 rows of the dataset
+head(male_teams_fc_24, 10)
+# Summarize the data using the Summary() function
+numeric_summary <- sapply("male_teams_fc_24", function(x) if(is.numeric(x)) summary(x) else NULL)
+result<- as.data.frame(numeric_summary)
+custom_summary <- function(x) {
+  q1 <- quantile(x, 0.25)
+  median_val <- median(x)
+  mean_val <- mean(x)
+  q3 <- quantile(x, 0.75) 
+  return(c(Min = min(x), `1st Qu` = q1, Median = median_val, Mean = mean_val, `3rd Qu` = q3, Max = max(x)))
+}
+print(result)
+# Employ the dim() function to ascertain the dataset's dimensions.
+dim(male_teams_fc_24)
+# Find a summary of the fifth column with the function summary(dataset[,5]).
+summary(male_teams_fc_24[, 5])
+# Calculate the mean of a specific variable using the command 
+mean(male_teams_fc_24$international_prestige)
+some_numeric_variable <- "penalties" 
+# Gain an overview of the dataset using the glimpse(variable_name) command
+glimpse(male_teams_fc_24)
+# Use the filter command to extract data based on the syntax
+A <- subset(male_teams_fc_24, penalties >=158023) 
+View(A)
+overall<-male_teams_fc_24$overall
+average<-male_teams_fc_24$starting_xi_average_age
+# Plot 1 -- BOXPLOT
+boxplot(overall,average,
+        main="Relation between Overall Performance and Average Age",
+        names=c("OVR (Overall)", "Average Age"),
+        col=c("red","blue"),
+        border=("black"))
+# Plot 2 -- LINE CHART 
+plot(male_teams_fc_24$club_worth_eur, type = "l",
+     main = "Line Chart of Club Worth",
+     xlab = "Clubs by IDs", ylab = "Club Worth in Euros")
+# Plot 3-- SCATTERPLOT
+plot(male_teams_fc_24$attack, male_teams_fc_24$defence, 
+     main = "Scatterplot of Attack vs Defence",
+     xlab = "attack", ylab = "defence")
+# Plot 3.1 -- SCATTERPLOT using pch, cex, pos & col cmds 
+plot(male_teams_fc_24$attack, male_teams_fc_24$defence, 
+     pch=4,
+     main = "Scatterplot of Attack vs Defence",
+     xlab = "attack", ylab = "defence")
+text(male_teams_fc_24$attack, male_teams_fc_24$defence, 
+     labels = row.names(male_teams_fc_24),
+     cex = 1,  
+     pos = 4,   
+     col = "pink")
